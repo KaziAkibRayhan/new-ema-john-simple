@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import About from "./About/About";
+import About from "./components/About/About";
 import "./App.css";
 import Inventory from "./components/Inventory/Inventory";
 import Orders from "./components/Orders/Orders";
