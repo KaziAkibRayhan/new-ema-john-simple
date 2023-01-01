@@ -16,7 +16,7 @@ const Shop = () => {
   const [cart, setCart] = useState([]);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
-  
+
   const pages = Math.ceil(count / size);
 
   useEffect(() => {
@@ -37,15 +37,28 @@ const Shop = () => {
   useEffect(() => {
     const storedCart = getStoredCart();
     const saveCart = [];
-    for (const id in storedCart) {
-      const addedProduct = products.find((product) => product._id === id);
-      if (addedProduct) {
-        const quantity = storedCart[id];
-        addedProduct.quantity = quantity;
-        saveCart.push(addedProduct);
-      }
-    }
-    setCart(saveCart);
+
+    const ids = Object.keys(storedCart);
+    console.log(ids);
+    fetch("http://localhost:5000/productsByIds", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(ids),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        for (const id in storedCart) {
+          const addedProduct = data.find((product) => product._id === id);
+          if (addedProduct) {
+            const quantity = storedCart[id];
+            addedProduct.quantity = quantity;
+            saveCart.push(addedProduct);
+          }
+        }
+        setCart(saveCart);
+      });
   }, [products]);
 
   const handleAddToCart = (selectedProduct) => {
