@@ -16,6 +16,7 @@ const Shop = () => {
   const [cart, setCart] = useState([]);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
+  
   const pages = Math.ceil(count / size);
 
   useEffect(() => {
@@ -92,7 +93,7 @@ const Shop = () => {
             key={number}
             onClick={() => setPage(number)}
           >
-            {number}
+            {number + 1}
           </button>
         ))}
         <select onChange={(event) => setSize(event.target.value)}>
